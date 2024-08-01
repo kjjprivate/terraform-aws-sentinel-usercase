@@ -118,14 +118,14 @@ resource "aws_volume_attachment" "ebs_att" {
 # EBS 스냅샷 생성
 resource "aws_ebs_snapshot" "example_snapshot" {
   volume_id = aws_ebs_volume.example.id
-
+  
   tags = {
     Name = "ExampleSnapshot"
   }
 }
 
 # 스냅샷 공유 권한 설정 - 스냅샷 있는 경우 항상 같이 있어야 함
-#resource "aws_snapshot_create_volume_permission" "example_permission" {
-#  snapshot_id = aws_ebs_snapshot.example_snapshot.id
-#  account_id  = "123456789012" # 공유할 AWS 계정 ID
-#}
+resource "aws_snapshot_create_volume_permission" "example_permission" {
+  snapshot_id = aws_ebs_snapshot.example_snapshot.id
+  account_id  = "123456789012" # 공유할 AWS 계정 ID
+}
